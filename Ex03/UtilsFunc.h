@@ -24,6 +24,7 @@ const string NO_CONTENT_RES = "204 No Content";
 const string OK_RES = "200 OK";
 const string CREATED_FILE_RES = "201 Created";
 const string NO_CONTENT_RES = "204 No content";
+const string SERVER_ERROR = "500 Internal Server Error";
 //***************************************************************************************************************//
 enum class requestType
 {
@@ -42,3 +43,7 @@ requestType convertStrToEnumType(string& type);
 string handleResponseGet(string request);
 string handleResponsePost(string request);
 string handleResponsePut(string req);
+string handleResponseDelete(string request);
+string handleResponseHead(string request);
+string handleResponseTrace(string request);
+string handleResponseOptions(string request);

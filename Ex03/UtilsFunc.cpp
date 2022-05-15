@@ -84,24 +84,26 @@ string getLangFromReq(string req)
 	return fromLangStrToEnd.substr(0, fromLangStrToEnd.find_first_of(' '));
 }
 
-string createResponse(string status, string contentType, string contentLen, string body, bool isOptions) {
+string createResponse(string status, string type, string len, string body, bool isOptions) {
 
 	time_t rawtime;
 	time(&rawtime);
-	string date(ctime(&rawtime)); //get the date for the response
-
-	string res = ("HTTP/1.1" + status + "\r\n" + "Host: Web server\r\n Date:" + date + "Content-Length:" + contentLen 
-		+ "\r\n" + "Content-Type: " + contentType +"\r\n" );
+	string date(ctime(&rawtime)); // get the date for the response
+	string respond = (
+		"HTTP/1.1" + status + "\r\n" +  // Status
+		"Host: Web server\r\n Date:" + date + // Date
+		"Content-Length:" + len + "\r\n" + // Length
+		"Content-Type: " + type +"\r\n" ); // Type
 
 	if (isOptions)
 	{
-		res += ("Allow: GET,POST,PUT,HEAD,TRACE, OPTIONS, DELETE\r\n");
+		respond += ("Allow: GET,POST,PUT,HEAD,TRACE, OPTIONS, DELETE\r\n");
 	}
 
-	res += "\r\n"; //need to be a blank line separates header & body
-	res += body;
+	respond += "\r\n"; //need to be a blank line separates header & body
+	respond += body;
 
-	return res;
+	return respond;
 
 }
 
@@ -150,6 +152,48 @@ string handleResponsePut(string req)
 string getFileNameForPutAndDelete(string req)
 {
 	string fromFileNameToEnd = req.substr(req.find_first_of('/') + 1);
-
 	return fromFileNameToEnd.substr(0, fromFileNameToEnd.find_first_of(' '));
 }
+
+
+string handleResponseDelete(string request)
+{
+	string fileName = START_PATH + getFileNameForPutAndDelete(request);
+	string status = NO_CONTENT_RES;
+
+	if (remove(fileName.c_str()) != 0)
+		status = SERVER_ERROR;
+
+	return createResponse(status, "text/html", "0", "", false);
+}
+
+string handleResponseHead(string request)
+{
+	string fileName = getFullFileDir(request);
+	ifstream myFile(fileName);
+	string status = OK_RES;
+	int fileSize = 0;
+
+	if (!myFile)
+	{
+		status = NOT_FOUND_RES;
+	}
+	else
+	{
+		myFile.seekg(0, ios::end);
+		fileSize = myFile.tellg();
+		myFile.close();
+	}
+
+	return createResponse(status, "text/html", to_string(fileSize), "", false);
+}
+
+string handleResponseTrace(string request){
+	return createResponse(OK_RES, "massage/http", to_string(request.size()), request, false);
+}
+
+string handleResponseOptions(string request)
+{
+	return createResponse(OK_RES, "httpd/unix-directory", "0", "", true);
+}
+

@@ -213,7 +213,8 @@ void ServerManger::sendMessage(int index) {
 			break;
 		}
 		case requestType::PUT_TYPE:
-		{ 
+		{
+			ans = handleResponsePut(sockets[index].reqs.front());
 			break;
 		}
 		case requestType::DELETE_TYPE:
