@@ -204,7 +204,7 @@ void ServerManger::sendMessage(int index) {
 	{
 		case requestType::GET_TYPE: 
 		{
-			ans = handleResponseGet(sockets[index].reqs.front()); //we need to take the firs in line 
+			ans = handleResponseGet(sockets[index].reqs.front()); //we need to take the first in line ...
 			break;
 		}
 		case requestType::POST_TYPE:

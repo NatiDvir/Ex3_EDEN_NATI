@@ -41,3 +41,4 @@ string getMethod(string msg);
 requestType convertStrToEnumType(string& type);
 string handleResponseGet(string request);
 string handleResponsePost(string request);
+string handleResponsePut(string req);
