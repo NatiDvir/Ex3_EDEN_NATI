@@ -60,29 +60,35 @@ string handleResponseGet(string request)
 	return createResponse(statusRes, "text/html", to_string(bodyRes.length()), bodyRes, false);
 }
 
-string getFullFileDir(string request)
-{
-	string fileName = getFileName(request);
-	string lang = getLangFromReq(request);
+string getFullFileDir(string request){
+	
+	// Get file's name
+	string fileName = request.substr(request.find_first_of('/') + 1, request.find_first_of('?') - request.find_first_of('/'));
+	fileName = fileName.substr(0, fileName.size() - 6); 
+	// Get language name
+	string lang = request.substr(request.find_first_of('?') + 6);
+	lang = lang.substr(0, lang.find_first_of(' '));
+
+	// C:\\temp\\fileName_language.html
 	string fullFileName = START_PATH + fileName + "_" + lang + ".html";
 }
 
-string getFileName(string req)
-{
-	string ans = req.substr(req.find_first_of('/') + 1, req.find_first_of('?') - req.find_first_of('/'));
+//string getFileName(string req)
+//{
+//	string ans = req.substr(req.find_first_of('/') + 1, req.find_first_of('?') - req.find_first_of('/'));
+//
+//	ans = ans.substr(0, ans.size() - 6);
+//	return ans;
+//}
 
-	ans = ans.substr(0, ans.size() - 6);
-	return ans;
-}
-
-string getLangFromReq(string req)
-{
-	string reqString(req);
-
-	string fromLangStrToEnd = reqString.substr(reqString.find_first_of('?') + 6);
-
-	return fromLangStrToEnd.substr(0, fromLangStrToEnd.find_first_of(' '));
-}
+//string getLangFromReq(string req)
+//{
+//	string reqString(req);
+//
+//	string fromLangStrToEnd = reqString.substr(reqString.find_first_of('?') + 6);
+//
+//	return fromLangStrToEnd.substr(0, fromLangStrToEnd.find_first_of(' '));
+//}
 
 string createResponse(string status, string type, string len, string body, bool isOptions) {
 
