@@ -2,7 +2,7 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include "ServerManger.h"
 #include "UtilsFunc.h"
-#include "Request.h"
+#include "Request.h" // DELETE later
 
 SOCKET ServerManger::initListenSocket() {
 

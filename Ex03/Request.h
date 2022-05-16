@@ -11,10 +11,10 @@ public:
 	string data;
 	
 
-	Request(int _sendSubType, string _msg, string _data = nullptr);
-	void setData(string _data);
+	//Request(int _sendSubType, string _msg, string _data = nullptr);
+	//void setData(string _data);
 
-	Request(int _sendSubType, string _msg, string _data)
+	Request(int _sendSubType, string _msg, string _data= nullptr)
 	{
 		sendSubType = _sendSubType;
 		msg = _msg;

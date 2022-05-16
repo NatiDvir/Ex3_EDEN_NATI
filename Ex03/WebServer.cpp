@@ -39,7 +39,7 @@ int main() {
 		{
 			cout << "Web Server: Error at select(): " << WSAGetLastError() << endl;
 			WSACleanup();
-			return;
+			return 0;
 		}
 
 		serverManger.handleRecv(waitRecv, nfd); 

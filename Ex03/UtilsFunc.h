@@ -23,7 +23,6 @@ const string NOT_FOUND_RES = "404 NOT FOUND";
 const string NO_CONTENT_RES = "204 No Content";
 const string OK_RES = "200 OK";
 const string CREATED_FILE_RES = "201 Created";
-const string NO_CONTENT_RES = "204 No content";
 const string SERVER_ERROR = "500 Internal Server Error";
 //***************************************************************************************************************//
 enum class requestType
@@ -47,3 +46,9 @@ string handleResponseDelete(string request);
 string handleResponseHead(string request);
 string handleResponseTrace(string request);
 string handleResponseOptions(string request);
+string createResponse(string status, string type, string len, string body, bool isOptions);
+string getBodyFromReq(string req);
+string getFileNameForPutAndDelete(string req);
+string getFullFileDir(string request);
+string getFileName(string req);
+string getLangFromReq(string req);

@@ -71,7 +71,17 @@ string getFullFileDir(string request){
 
 	// C:\\temp\\fileName_language.html
 	string fullFileName = START_PATH + fileName + "_" + lang + ".html";
+	return fullFileName;
 }
+
+//string getFullFileDir(string req)
+//{
+//	string fileName = getFileName(req);
+//	string lang = getLangFromReq(req);
+//	string fullFileName = "C:\\temp\\" + fileName + "_" + lang + ".html";
+//
+//	return fullFileName;
+//}
 
 //string getFileName(string req)
 //{
@@ -80,7 +90,9 @@ string getFullFileDir(string request){
 //	ans = ans.substr(0, ans.size() - 6);
 //	return ans;
 //}
-
+//
+//
+//
 //string getLangFromReq(string req)
 //{
 //	string reqString(req);
@@ -95,11 +107,12 @@ string createResponse(string status, string type, string len, string body, bool 
 	time_t rawtime;
 	time(&rawtime);
 	string date(ctime(&rawtime)); // get the date for the response
-	string respond = (
-		"HTTP/1.1" + status + "\r\n" +  // Status
-		"Host: Web server\r\n Date:" + date + // Date
-		"Content-Length:" + len + "\r\n" + // Length
-		"Content-Type: " + type +"\r\n" ); // Type
+	string respond = "HTTP/1.1 ";
+	respond += (status + "\r\n");
+	respond += "Host: Web Server\r\n";
+	respond += ("Date: " + date);
+	respond += (string("Content-Type: ") + type + "\r\n");
+	respond += (string("Content-Length: ") + len+ "\r\n");
 
 	if (isOptions)
 	{
